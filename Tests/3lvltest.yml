@@ -1,0 +1,16 @@
+variables:
+  - name: Variable 1
+    values: 
+      - A
+      - B
+  - name: Variable 2
+    values: 
+      - One
+      - Two
+      - Three
+  - name: Variable 2
+    values: 
+      - 1
+      - 2
+      - 3
+      - 4

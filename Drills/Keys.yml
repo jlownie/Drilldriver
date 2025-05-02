@@ -1,0 +1,19 @@
+variables:
+  - name: Key
+    values: 
+      - A
+      - Ab
+      - B
+      - Bb
+      - C
+      - D
+      - Db
+      - E
+      - Eb
+      - F
+      - G
+      - Gb
+  - name: Tonality
+    values:
+      - Major
+      - Natural minor
