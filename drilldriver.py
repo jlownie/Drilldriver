@@ -1,4 +1,5 @@
 import yaml
+import argparse
 
 keysfile="Drills/Keys.yml"
 multileveltestfile="Tests/3lvltest.yml"
@@ -23,9 +24,20 @@ def getPrompts( variables, myindex ):
                 myprompts.append(newprompt)
         return myprompts
 
+# Parses command line parameters and returns them
+def parseArgs():
+  parser = argparse.ArgumentParser(
+      prog='Drilldriver',
+      description='Software for practicing drills of various kinds.')
+  #parser.add_argument('pdfname', help="The path to the PDF file to be converted")
+  parser.add_argument('Inputfile', help="The activity parameters file")
+  return parser.parse_args()
+
 def main():
+    args=parseArgs()    
+
     # Load activity parameters from a YAML file
-    with open(multileveltestfile, "r") as file:
+    with open(args.Inputfile, "r") as file:
         activityparams = yaml.safe_load(file)
 
     # Construct an exhaustive set of variable value combinations
