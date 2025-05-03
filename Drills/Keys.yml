@@ -1,4 +1,5 @@
-variables:
+prompt_format: "{0} {1}"
+prompt_variables:
   - name: Key
     values: 
       - A
