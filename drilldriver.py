@@ -41,12 +41,17 @@ def main():
         activityparams = yaml.safe_load(file)
 
     # Construct an exhaustive set of variable value combinations
-    promptvals=getPrompts(activityparams['variables'], 0)
+    promptvals=getPrompts(activityparams['prompt_variables'], 0)
 
     # Construct prompts from the lists
-    None
+    promptstrs=[]
+    promptformat=activityparams['prompt_format']
+    for thisval in promptvals:
+        thisstr=promptformat.format(*thisval)
+        promptstrs.append(thisstr)
 
     # Create a CSV from the generated prompts
+    None
 
 if __name__ == "__main__":
     main()
