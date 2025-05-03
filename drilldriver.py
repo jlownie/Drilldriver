@@ -1,8 +1,7 @@
-import yaml
 import argparse
-
-keysfile="Drills/Keys.yml"
-multileveltestfile="Tests/3lvltest.yml"
+import csv
+import os
+import yaml
 
 def getPrompts( variables, myindex ):
     # If we are the last in the set of variable values, just return those values
@@ -26,12 +25,24 @@ def getPrompts( variables, myindex ):
 
 # Parses command line parameters and returns them
 def parseArgs():
-  parser = argparse.ArgumentParser(
-      prog='Drilldriver',
-      description='Software for practicing drills of various kinds.')
-  #parser.add_argument('pdfname', help="The path to the PDF file to be converted")
-  parser.add_argument('Inputfile', help="The activity parameters file")
-  return parser.parse_args()
+    parser = argparse.ArgumentParser(
+        prog='Drilldriver',
+        description='Software for practicing drills of various kinds.')
+    #parser.add_argument('pdfname', help="The path to the PDF file to be converted")
+    parser.add_argument('Inputfile', help="The activity parameters file")
+    parser.add_argument(
+        "CSV",            # positional argument
+        nargs='?',         # makes it optional
+        help="The name of the CSV file that will be produced. Defaults to the input file name."
+    )
+    args=parser.parse_args()
+
+    # Set the output file name if not provided
+    if args.CSV==None:
+        fullname=os.path.basename(args.Inputfile)
+        nameonly=os.path.splitext(fullname)[0]
+        args.CSV=nameonly + ".csv"
+    return args
 
 def main():
     args=parseArgs()    
@@ -44,14 +55,16 @@ def main():
     promptvals=getPrompts(activityparams['prompt_variables'], 0)
 
     # Construct prompts from the lists
-    promptstrs=[]
+    promptstrs=[["Front", "Back"]]
     promptformat=activityparams['prompt_format']
     for thisval in promptvals:
         thisstr=promptformat.format(*thisval)
-        promptstrs.append(thisstr)
+        promptstrs.append([thisstr, ""])
 
     # Create a CSV from the generated prompts
-    None
+    with open(args.CSV, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerows(promptstrs)
 
 if __name__ == "__main__":
     main()
